@@ -4,9 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import max.iv.task_management_system.Models.Enums.Roles;
 
-import javax.management.relation.Role;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity

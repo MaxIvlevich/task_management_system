@@ -13,13 +13,14 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID taskUUId;
-
     private String title;
     private String description;
     @Enumerated(EnumType.STRING)
     private Status status;
     @Enumerated(EnumType.STRING)
     private Priority priority;
+
+    private String comment;
     @ManyToOne
     @JoinColumn
     private User author;

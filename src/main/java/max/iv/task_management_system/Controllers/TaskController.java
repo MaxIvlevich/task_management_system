@@ -15,10 +15,10 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/")
+@RequestMapping("/")
 public class TaskController {
 
-    TaskServiceImpl taskServiceImpl;
+    private final TaskServiceImpl taskServiceImpl;
 
     @GetMapping("/tasks")
     private ResponseEntity<TaskResponse> getAllTasks(){
@@ -31,8 +31,8 @@ public class TaskController {
 
     }
     @PutMapping("/task/{TASK_UUID}")
-    private ResponseEntity<TaskDTO> getTask(@PathVariable UUID TASK_UUID,@RequestBody IncomeTaskDto updatedTask){
-        return new ResponseEntity<>(taskServiceImpl.findTaskById(TASK_UUID), HttpStatus.OK);
+    private ResponseEntity<TaskDTO> updateTask(@PathVariable UUID TASK_UUID,@RequestBody IncomeTaskDto updatedTask){
+        return new ResponseEntity<>(taskServiceImpl.updateTask(TASK_UUID,updatedTask), HttpStatus.OK);
 
     }
 
