@@ -10,7 +10,6 @@ import max.iv.task_management_system.Models.Enums.Status;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TaskDTO {
-
     private String title;
     private String description;
     private Status status;

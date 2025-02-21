@@ -11,9 +11,9 @@ import max.iv.task_management_system.Repository.TaskRepository;
 import max.iv.task_management_system.Services.Interface.TaskService;
 import max.iv.task_management_system.mapper.TaskDTOMapper;
 import max.iv.task_management_system.mapper.TaskMapper;
+import max.iv.task_management_system.mapper.UpdateMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -23,9 +23,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
-
     private final TaskMapper taskMapper;
+    private final UpdateMapper updateMapper;
     @Override
+    @Transactional
     public TaskResponse getAllTasks() {
         log.info("Calling all Tasks");
         List<Task> tasks = (List<Task>) taskRepository.findAll();
@@ -38,21 +39,33 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Transactional
     public TaskDTO updateTask(UUID taskUUID,IncomeTaskDto incomeTaskDto) {
 
+        if(!taskRepository.existsById(taskUUID)){
+            log.info("here is no issue with this ID");
+            throw new IllegalArgumentException();
 
-        return null;
+        }
+
+        log.info("Update Task: {}",incomeTaskDto.getTitle());
+        Task task = taskRepository.findById(taskUUID)
+                .orElseThrow();
+
+        taskRepository.save(updateMapper.updateTask(task,incomeTaskDto));
+        log.info("The task has been updated");
+        return TaskDTOMapper.taskToDTO(task);
+
     }
 
     @Override
+    @Transactional
     public void deleteTask(UUID taskUUID) {
 
         log.info("Deleting a Task: {}",taskUUID);
         taskRepository.deleteById(taskUUID);
         log.info("Task Deleted");
-
     }
-
     @Override
     @Transactional
     public TaskDTO createNewTask(IncomeTaskDto incomeTaskDto) {
@@ -71,6 +84,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Transactional
     public TaskDTO findTaskById(UUID uuid) {
         Task task = taskRepository.findById(uuid)
                 .orElseThrow(()-> new IllegalArgumentException("Task not found"));
