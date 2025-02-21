@@ -15,7 +15,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/")
+@RequestMapping("/api")
 public class TaskController {
 
     private final TaskServiceImpl taskServiceImpl;
@@ -33,6 +33,17 @@ public class TaskController {
     @PutMapping("/task/{TASK_UUID}")
     private ResponseEntity<TaskDTO> updateTask(@PathVariable UUID TASK_UUID,@RequestBody IncomeTaskDto updatedTask){
         return new ResponseEntity<>(taskServiceImpl.updateTask(TASK_UUID,updatedTask), HttpStatus.OK);
+
+    }
+    @PostMapping("/task")
+    private ResponseEntity<TaskDTO> createTask(@RequestBody IncomeTaskDto createdTask){
+        return new ResponseEntity<>(taskServiceImpl.createNewTask(createdTask), HttpStatus.OK);
+
+    }
+    @DeleteMapping("/task/{TASK_UUID}")
+    private String deleteTask(@PathVariable UUID TASK_UUID){
+        taskServiceImpl.deleteTask(TASK_UUID);
+        return "Task Deleted";
 
     }
 

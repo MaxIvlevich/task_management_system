@@ -1,20 +1,31 @@
 package max.iv.task_management_system.mapper;
 
-import max.iv.task_management_system.DTO.TaskDTO;
+import lombok.AllArgsConstructor;
+import max.iv.task_management_system.DTO.IncomeTaskDto;
 import max.iv.task_management_system.Models.Task;
+import max.iv.task_management_system.Repository.UserRepository;
+import org.springframework.stereotype.Component;
 
 
+@AllArgsConstructor
+@Component
 public class TaskMapper {
-    public static TaskDTO taskToDTO(Task task){
-        TaskDTO taskDTO = new TaskDTO();
-        taskDTO.setTitle(task.getTitle());
-        taskDTO.setDescription(task.getDescription());
-        taskDTO.setStatus(task.getStatus());
-        taskDTO.setPriority(task.getPriority());
-        taskDTO.setAuthor(task.getAuthor().getEmail());
-        taskDTO.setExecutor(task.getExecutor().getEmail());
 
-        return taskDTO;
+    private  final UserRepository userRepository;
+
+
+    public  Task toTask(IncomeTaskDto incomeTaskDto){
+        Task newTask = new Task();
+
+        newTask.setTitle(incomeTaskDto.getTitle());
+        newTask.setDescription(incomeTaskDto.getDescription());
+        newTask.setStatus(incomeTaskDto.getStatus());
+        newTask.setPriority(incomeTaskDto.getPriority());
+        newTask.setAuthor(userRepository.findByEmail(incomeTaskDto.getAuthorEmail()));
+        newTask.setExecutor(userRepository.findByEmail(incomeTaskDto.getExecutorEmail()));
+        newTask.setComment(incomeTaskDto.getComment());
+
+        return newTask;
 
 
     }

@@ -17,6 +17,7 @@ public class IncomeTaskDto {
     private String description;
     private Status status;
     private Priority priority;
-    private User author;
-    private User executor;
+    private String authorEmail;
+    private String executorEmail;
+    private String comment;
 }

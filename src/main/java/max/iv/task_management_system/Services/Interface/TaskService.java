@@ -12,7 +12,7 @@ public interface TaskService {
 
      TaskDTO updateTask(UUID taskUUID,IncomeTaskDto incomeTaskDto);
 
-     void deleteTask(IncomeTaskDto incomeTaskDto);
+     void deleteTask(UUID uuid);
 
      TaskDTO createNewTask(IncomeTaskDto incomeTaskDto);
 
