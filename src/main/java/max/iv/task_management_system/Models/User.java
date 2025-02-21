@@ -1,7 +1,6 @@
 package max.iv.task_management_system.Models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import max.iv.task_management_system.Models.Enums.Roles;
 
