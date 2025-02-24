@@ -8,6 +8,8 @@ import max.iv.task_management_system.DTO.TaskResponse;
 import max.iv.task_management_system.Services.TaskServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -31,8 +33,10 @@ public class TaskController {
 
     }
     @PutMapping("/task/{TASK_UUID}")
-    private ResponseEntity<TaskDTO> updateTask(@PathVariable UUID TASK_UUID,@RequestBody IncomeTaskDto updatedTask){
-        return new ResponseEntity<>(taskServiceImpl.updateTask(TASK_UUID,updatedTask), HttpStatus.OK);
+    private ResponseEntity<TaskDTO> updateTask(@PathVariable UUID TASK_UUID,
+                                               @RequestBody IncomeTaskDto updatedTask,
+                                               @AuthenticationPrincipal UserDetails userDetailService){
+        return new ResponseEntity<>(taskServiceImpl.updateTask(TASK_UUID,updatedTask,userDetailService.getUsername()), HttpStatus.OK);
 
     }
     @PostMapping("/task")

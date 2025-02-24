@@ -7,7 +7,6 @@ public class UserDTOMapper {
 
     public static UserDTO UserToDto(User user) {
         UserDTO userDTO = new UserDTO();
-        userDTO.setUserUUId(user.getUserUUId());
         userDTO.setEmail(user.getEmail());
         userDTO.setRoles(user.getRoles());
         return userDTO;

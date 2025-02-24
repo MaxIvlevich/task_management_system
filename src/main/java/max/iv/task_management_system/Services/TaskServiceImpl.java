@@ -7,11 +7,14 @@ import max.iv.task_management_system.DTO.TaskDTO;
 import max.iv.task_management_system.DTO.TaskResponse;
 import max.iv.task_management_system.Exceptions.TaskAlreadyExistsException;
 import max.iv.task_management_system.Models.Task;
+import max.iv.task_management_system.Models.User;
 import max.iv.task_management_system.Repository.TaskRepository;
+import max.iv.task_management_system.Repository.UserRepository;
 import max.iv.task_management_system.Services.Interface.TaskService;
 import max.iv.task_management_system.mapper.TaskDTOMapper;
 import max.iv.task_management_system.mapper.TaskMapper;
 import max.iv.task_management_system.mapper.UpdateMapper;
+import max.iv.task_management_system.mapper.UserUpdateTaskMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -25,6 +28,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final UpdateMapper updateMapper;
+    private final UserRepository userRepository;
     @Override
     @Transactional
     public TaskResponse getAllTasks() {
@@ -40,21 +44,31 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public TaskDTO updateTask(UUID taskUUID,IncomeTaskDto incomeTaskDto) {
+    public TaskDTO updateTask(UUID taskUUID,IncomeTaskDto incomeTaskDto,String userEmail)  {
 
         if(!taskRepository.existsById(taskUUID)){
-            log.info("here is no issue with this ID");
+            log.info("Task not exist with ID{}",taskUUID);
             throw new IllegalArgumentException();
 
         }
+        if(userRepository.findByEmail(userEmail).get().isAdmin()){
+            log.info("Update Task: {}",incomeTaskDto.getTitle());
+            Task task = taskRepository.findById(taskUUID)
+                    .orElseThrow(()-> new IllegalArgumentException("Task not found"));
+            taskRepository.save(updateMapper.updateTask(task,incomeTaskDto));
+            log.info("The task has been updated");
+            return TaskDTOMapper.taskToDTO(task);
 
-        log.info("Update Task: {}",incomeTaskDto.getTitle());
-        Task task = taskRepository.findById(taskUUID)
-                .orElseThrow();
+        } else {
+            log.info("User {} Update Task: {}",userEmail,incomeTaskDto.getTitle());
+            Task task = taskRepository.findById(taskUUID)
+                    .orElseThrow();
+            taskRepository.save(UserUpdateTaskMapper.updateTask(task,incomeTaskDto));
+            log.info("The task has been updated");
+            return TaskDTOMapper.taskToDTO(task);
 
-        taskRepository.save(updateMapper.updateTask(task,incomeTaskDto));
-        log.info("The task has been updated");
-        return TaskDTOMapper.taskToDTO(task);
+        }
+
 
     }
 

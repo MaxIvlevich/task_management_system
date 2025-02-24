@@ -1,6 +1,5 @@
 package max.iv.task_management_system.Security;
 
-import max.iv.task_management_system.Services.CustomUserDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
