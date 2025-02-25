@@ -6,6 +6,9 @@ import max.iv.task_management_system.DTO.IncomeTaskDto;
 import max.iv.task_management_system.DTO.TaskDTO;
 import max.iv.task_management_system.DTO.TaskResponse;
 import max.iv.task_management_system.Services.TaskServiceImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,8 +26,12 @@ public class TaskController {
     private final TaskServiceImpl taskServiceImpl;
 
     @GetMapping("/tasks")
-    private ResponseEntity<TaskResponse> getAllTasks(){
-        return new ResponseEntity<>(taskServiceImpl.getAllTasks(), HttpStatus.OK);
+    private ResponseEntity<TaskResponse> getAllTasks(@PageableDefault(
+            size = 20,
+            page = 0,
+            sort = {"id"},
+            direction = Sort.Direction.ASC) Pageable pageable){
+        return new ResponseEntity<>(taskServiceImpl.getAllTasks(pageable), HttpStatus.OK);
 
     }
     @GetMapping("/task/{TASK_UUID}")
@@ -41,6 +48,7 @@ public class TaskController {
     }
     @PostMapping("/task")
     private ResponseEntity<TaskDTO> createTask(@RequestBody IncomeTaskDto createdTask){
+        log.info("Создаем задачу {} ",createdTask);
         return new ResponseEntity<>(taskServiceImpl.createNewTask(createdTask), HttpStatus.OK);
 
     }
@@ -49,6 +57,23 @@ public class TaskController {
         taskServiceImpl.deleteTask(TASK_UUID);
         return "Task Deleted";
 
+    }
+    @GetMapping("/tasks/author/{Author_Email}")
+    private ResponseEntity<TaskResponse> getAuthorTask(@PathVariable String Author_Email, @PageableDefault(
+            size = 20,
+            page = 0,
+            sort = {"id"},
+            direction = Sort.Direction.ASC) Pageable pageable){
+        return new ResponseEntity<>(taskServiceImpl.getTaskByUserEmail(Author_Email,pageable), HttpStatus.OK);
+
+    }
+    @GetMapping("/tasks/executor/{Executor_Email}")
+    private ResponseEntity<TaskResponse> getExecutorTask(@PathVariable String Executor_Email,@PageableDefault(
+            size = 20,
+            page = 0,
+            sort = {"id"},
+            direction = Sort.Direction.ASC) Pageable pageable){
+        return new ResponseEntity<>(taskServiceImpl.getTaskByUserEmail(Executor_Email,pageable), HttpStatus.OK);
     }
 
 }

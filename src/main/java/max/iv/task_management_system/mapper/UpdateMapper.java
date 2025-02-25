@@ -26,6 +26,7 @@ public class UpdateMapper {
                  .orElseThrow(() -> new UsernameNotFoundException(taskIncomeDto.getAuthorEmail())));
          taskUpdate.setExecutor(userRepository.findByEmail(taskIncomeDto.getExecutorEmail())
                  .orElseThrow(() -> new UsernameNotFoundException(taskIncomeDto.getExecutorEmail())));
+         taskUpdate.setComment(taskIncomeDto.getComment());
          return taskUpdate;
 
 

@@ -38,6 +38,7 @@ public class SecurityConfig {
                         .requestMatchers("/users/sign-up").permitAll()
                         .requestMatchers( "/api/swagger-ui/**", "/api/v1/api-docs/**").permitAll()
                         .requestMatchers( "/api/task/{id}").authenticated()
+                        .requestMatchers( "/api/tasks/**").hasRole("ADMIN")
                         .requestMatchers( "/api/task").hasRole("ADMIN")
                         .requestMatchers( "/api/tasks").hasRole("ADMIN")
 
@@ -59,8 +60,8 @@ public class SecurityConfig {
 
     }
 
-    //    eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1QDUiLCJleHAiOjE3NDA0NzQxNzB9.kVZqenV04RLD17eIm84aWYqP0LCO3V5_x2FQrrDEvhM
-    //  refr   eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1QDUiLCJleHAiOjE3NDA1NTY5NzB9.J13NpkhEN8Qs08RLsMlwixv3wWJ8IrvtvjKY1yOI9XU
+    //    eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1QDUiLCJleHAiOjE3NDA0NzczMDR9.xMD6f69k19ttU5_gop7Xz4TeQGp2kk75iuNsMpHFrNY
+    //  refr   eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1QDUiLCJleHAiOjE3NDA1NjAxMDR9.vWEFk764oatLp1Yt6573zlGSCNjrzejG1j3wA5nYw9U
 
 
 }

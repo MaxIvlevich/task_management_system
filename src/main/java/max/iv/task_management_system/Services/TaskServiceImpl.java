@@ -15,8 +15,16 @@ import max.iv.task_management_system.mapper.TaskDTOMapper;
 import max.iv.task_management_system.mapper.TaskMapper;
 import max.iv.task_management_system.mapper.UpdateMapper;
 import max.iv.task_management_system.mapper.UserUpdateTaskMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+
+
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -31,15 +39,17 @@ public class TaskServiceImpl implements TaskService {
     private final UserRepository userRepository;
     @Override
     @Transactional
-    public TaskResponse getAllTasks() {
+    public TaskResponse getAllTasks(Pageable pageable) {
         log.info("Calling all Tasks");
+
         List<Task> tasks = (List<Task>) taskRepository.findAll();
         List<TaskDTO> taskDTOs = tasks.stream()
                 .map(TaskDTOMapper::taskToDTO)
-                .collect(Collectors.toList());
-        TaskResponse taskResponse = new TaskResponse();
-        taskResponse.setContent(taskDTOs);
-        return taskResponse;
+                .toList();
+
+        return new TaskResponse(new  PageImpl<>(taskDTOs,pageable,taskDTOs.size()));
+
+
     }
 
     @Override
@@ -109,7 +119,22 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskResponse getTaskByUserEmail(String email) {
-        return null;
+    @Transactional
+    public TaskResponse getTaskByUserEmail(String email,Pageable pageable) {
+        log.info("Calling all Tasks by Email{}",email);
+
+        List<Task> tasks = taskRepository.findTaskByAuthor(userRepository
+                .findByEmail(email)
+                .orElseThrow( () -> new UsernameNotFoundException(email)),pageable);
+
+        List<TaskDTO> taskDTOs = tasks.stream()
+                .map(TaskDTOMapper::taskToDTO)
+                .collect(Collectors.toList());
+
+        return new TaskResponse(new  PageImpl<>(taskDTOs,pageable,taskDTOs.size()));
+
+
+
+
     }
 }
