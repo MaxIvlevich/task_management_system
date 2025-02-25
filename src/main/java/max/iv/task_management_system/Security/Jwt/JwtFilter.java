@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import max.iv.task_management_system.Models.User;
 import max.iv.task_management_system.Security.CustomUserDetailService;
 import max.iv.task_management_system.Security.CustomUserDetails;
@@ -17,7 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.net.http.HttpHeaders;
-
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
@@ -28,9 +29,12 @@ public class JwtFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
 
+        log.info(" doFilterInternal" );
         String token = getTokenFromRequest(request);
         if(token != null && jwtService.validateJwtToken(token)){
+
             setCustomUserDetailsToSecurityContextHolder(token);
+
 
         }
         filterChain.doFilter(request, response);
@@ -39,6 +43,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private void setCustomUserDetailsToSecurityContextHolder(String token) {
         String email = jwtService.getEmailFromToken(token);
+        log.info(" user email {}",email);
          CustomUserDetails userDetails = userDetailService.loadUserByUsername(email);
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,
                 null, userDetails.getAuthorities());     /// nen

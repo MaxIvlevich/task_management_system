@@ -16,4 +16,6 @@ public interface TaskService {
      TaskDTO createNewTask(IncomeTaskDto incomeTaskDto);
 
      TaskDTO findTaskById(UUID uuid);
+
+     TaskResponse getTaskByUserEmail(String email);
 }

@@ -107,4 +107,9 @@ public class TaskServiceImpl implements TaskService {
 
 
     }
+
+    @Override
+    public TaskResponse getTaskByUserEmail(String email) {
+        return null;
+    }
 }

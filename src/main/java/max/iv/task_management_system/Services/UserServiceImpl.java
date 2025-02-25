@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
    @Override
     public User createUser(User user) {
         String email = user.getEmail();
-        if (userRepository.findByEmail(email) != null) {
+        if (userRepository.findByEmail(email).isPresent()) {
             log.info("the user already exists");
             return null;
         }
@@ -28,19 +28,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
-    public UserDetailsService userDetailsService() {
-        return this::getByUsername;
-    }
-    @Override
-    public User getByUsername(String email) {
-        return userRepository.findByEmail(email);
 
-    }
 
-    @Override
-    public User getCurrentUser() {
-        var email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return getByUsername(email);
-    }
 }

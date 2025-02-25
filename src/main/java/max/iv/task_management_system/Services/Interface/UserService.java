@@ -8,9 +8,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService {
 
     User createUser(User user);
-    UserDetailsService userDetailsService();
-    User getByUsername(String username);
-    User getCurrentUser();
+
+
+
 
 
 }

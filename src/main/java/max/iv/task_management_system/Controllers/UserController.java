@@ -2,6 +2,7 @@ package max.iv.task_management_system.Controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import max.iv.task_management_system.DTO.JwtAuthenticationDTO;
 import max.iv.task_management_system.DTO.UserIncomeDTO;
 import max.iv.task_management_system.Security.Jwt.JwtAuthenticationResponse;
 import max.iv.task_management_system.Security.AuthenticationServiceImpl;
@@ -20,8 +21,8 @@ public class UserController {
 
     private final AuthenticationServiceImpl authenticationService;
     @PostMapping("/registration")
-    public ResponseEntity<JwtAuthenticationResponse> crateUser(@RequestBody UserIncomeDTO UserIncomeDTO){
-        return new  ResponseEntity<>(authenticationService.signUp(UserIncomeDTO), HttpStatus.OK);
+    public ResponseEntity<JwtAuthenticationDTO> crateUser(@RequestBody UserIncomeDTO UserIncomeDTO){
+        return new  ResponseEntity<>(authenticationService.registrationNewUser(UserIncomeDTO), HttpStatus.OK);
 
     }
 
