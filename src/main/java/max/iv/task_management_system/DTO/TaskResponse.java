@@ -1,9 +1,8 @@
 package max.iv.task_management_system.DTO;
 
+import lombok.Builder;
 import lombok.Data;
-import max.iv.task_management_system.Models.Task;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 @Data

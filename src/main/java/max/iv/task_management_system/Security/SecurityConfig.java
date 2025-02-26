@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
 
-                        .requestMatchers("/users/sign-up").permitAll()
+                        .requestMatchers("/users/sign-up","/users/registration").permitAll()
                         .requestMatchers( "/swagger-ui/**", "/v3/api-docs","/swagger-ui.html","/v3/api-docs/**").permitAll()
                         .requestMatchers( "/api/task/{id}").authenticated()
                         .requestMatchers( "/api/tasks/**").hasRole("ADMIN")
@@ -60,8 +60,8 @@ public class SecurityConfig {
 
     }
 
-    //    eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1QDUiLCJleHAiOjE3NDA0NzczMDR9.xMD6f69k19ttU5_gop7Xz4TeQGp2kk75iuNsMpHFrNY
-    //  refr   eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1QDUiLCJleHAiOjE3NDA1NjAxMDR9.vWEFk764oatLp1Yt6573zlGSCNjrzejG1j3wA5nYw9U
+    //    eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTV0VUQUBMWUJPViIsImV4cCI6MTc0MDU5MTU0MX0.Nt_0kdjS_JewwPXEP68Zu4T4WHmlBnsh8wkUdw-MOxE
+
 
 
 }

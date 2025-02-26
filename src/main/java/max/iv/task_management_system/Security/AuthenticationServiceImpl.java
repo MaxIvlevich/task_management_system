@@ -10,6 +10,7 @@ import max.iv.task_management_system.Models.User;
 import max.iv.task_management_system.Repository.UserRepository;
 import max.iv.task_management_system.Security.Interface.AuthenticationService;
 import max.iv.task_management_system.Security.Jwt.JwtService;
+import max.iv.task_management_system.Services.UserServiceImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final UserServiceImpl userService;
 
 
 
@@ -37,7 +39,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public JwtAuthenticationDTO registrationNewUser(UserIncomeDTO userIncomeDTO) {
-        return null;
+
+       if(userRepository.findByEmail(userIncomeDTO.getEmail()).isPresent()){
+           return null;
+       } else{
+          User user =  userService.createUser(userIncomeDTO);
+           return jwtService.generateAuthToken(user.getEmail());
+       }
     }
 
     @Override

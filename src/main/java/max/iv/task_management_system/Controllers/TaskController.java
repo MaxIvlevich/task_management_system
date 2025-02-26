@@ -33,7 +33,7 @@ public class TaskController {
     private ResponseEntity<TaskResponse> getAllTasks(@PageableDefault(
             size = 20,
             page = 0,
-            sort = {"id"},
+            sort = {"taskUUId"},
             direction = Sort.Direction.ASC) Pageable pageable){
         return new ResponseEntity<>(taskServiceImpl.getAllTasks(pageable), HttpStatus.OK);
 
@@ -71,7 +71,7 @@ public class TaskController {
     private ResponseEntity<TaskResponse> getAuthorTask(@PathVariable String Author_Email, @PageableDefault(
             size = 20,
             page = 0,
-            sort = {"id"},
+            sort = {"taskUUId"},
             direction = Sort.Direction.ASC) Pageable pageable){
         return new ResponseEntity<>(taskServiceImpl.getTaskByUserEmail(Author_Email,pageable), HttpStatus.OK);
 
@@ -81,7 +81,7 @@ public class TaskController {
     private ResponseEntity<TaskResponse> getExecutorTask(@PathVariable String Executor_Email,@PageableDefault(
             size = 20,
             page = 0,
-            sort = {"id"},
+            sort = {"taskUUId"},
             direction = Sort.Direction.ASC) Pageable pageable){
         return new ResponseEntity<>(taskServiceImpl.getTaskByUserEmail(Executor_Email,pageable), HttpStatus.OK);
     }
