@@ -14,7 +14,6 @@ public class TaskPageDTO {
     private long totalElements;
     private int totalPages;
 
-
     public TaskPageDTO(Page<Task> page) {
         this.content = page.getContent();
         this.pageNumber = page.getNumber();

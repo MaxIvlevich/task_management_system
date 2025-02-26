@@ -121,7 +121,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public TaskResponse getTaskByUserEmail(String email,Pageable pageable) {
-        log.info("Calling all Tasks by Email{}",email);
+        log.info("Calling all Tasks by Email {}",email);
 
         List<Task> tasks = taskRepository.findTaskByAuthor(userRepository
                 .findByEmail(email)
@@ -129,7 +129,7 @@ public class TaskServiceImpl implements TaskService {
 
         List<TaskDTO> taskDTOs = tasks.stream()
                 .map(TaskDTOMapper::taskToDTO)
-                .collect(Collectors.toList());
+                .toList();
 
         return new TaskResponse(new  PageImpl<>(taskDTOs,pageable,taskDTOs.size()));
 

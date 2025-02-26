@@ -1,0 +1,30 @@
+volumes:
+  task_management:
+
+services:
+
+  postgres:
+    image: postgres
+    restart: always
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1123
+    volumes:
+      -   task_management:/var/lib/postgresql/data
+    ports:
+      - "5431:5432"
+  app:
+    restart: always
+    build: .
+    container_name: task_management_app
+    ports:
+      - "9090:9090"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 1123
+      JAVA_OPTS: -Xmx512m
