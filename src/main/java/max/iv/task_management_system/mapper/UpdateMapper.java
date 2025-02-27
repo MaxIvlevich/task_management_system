@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component
 public class UpdateMapper {
-
-
      private  final UserRepository userRepository;
 
      public Task updateTask(Task taskUpdate, IncomeTaskDto taskIncomeDto){

@@ -83,7 +83,7 @@ public class TaskController {
             page = 0,
             sort = {"taskUUId"},
             direction = Sort.Direction.ASC) Pageable pageable){
-        return new ResponseEntity<>(taskServiceImpl.getTaskByUserEmail(Executor_Email,pageable), HttpStatus.OK);
+        return new ResponseEntity<>(taskServiceImpl.getTaskByExecutorEmail(Executor_Email,pageable), HttpStatus.OK);
     }
 
 }

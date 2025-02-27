@@ -20,4 +20,7 @@ public interface TaskService {
      TaskDTO findTaskById(UUID uuid);
 
      TaskResponse getTaskByUserEmail(String email,Pageable pageable);
+
+    Object getTaskByExecutorEmail(String executorEmail, Pageable pageable);
+
 }

@@ -137,4 +137,20 @@ public class TaskServiceImpl implements TaskService {
 
 
     }
+
+    @Override
+    public TaskResponse getTaskByExecutorEmail(String executorEmail, Pageable pageable) {
+        log.info("Calling all Tasks by executorEmail Email {}",executorEmail);
+        List<Task> tasks = taskRepository.findTaskByExecutor(userRepository
+                .findByEmail(executorEmail)
+                .orElseThrow( () -> new UsernameNotFoundException(executorEmail)),pageable);
+
+        List<TaskDTO> taskDTOs = tasks.stream()
+                .map(TaskDTOMapper::taskToDTO)
+                .toList();
+
+        return new TaskResponse(new  PageImpl<>(taskDTOs,pageable,taskDTOs.size()));
+
+
+    }
 }

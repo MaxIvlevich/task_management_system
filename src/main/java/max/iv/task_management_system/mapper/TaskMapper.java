@@ -1,5 +1,6 @@
 package max.iv.task_management_system.mapper;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import max.iv.task_management_system.DTO.IncomeTaskDto;
 import max.iv.task_management_system.Models.Task;
@@ -10,10 +11,9 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
+@Schema(description = "creates a new DTO  for income data")
 public class TaskMapper {
-
     private  final UserRepository userRepository;
-
 
     public  Task toTask(IncomeTaskDto incomeTaskDto){
         Task newTask = new Task();
