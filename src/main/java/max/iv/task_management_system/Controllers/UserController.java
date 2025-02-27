@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import max.iv.task_management_system.DTO.JwtAuthenticationDTO;
 import max.iv.task_management_system.DTO.UserIncomeDTO;
-import max.iv.task_management_system.Security.Jwt.JwtAuthenticationResponse;
 import max.iv.task_management_system.Security.AuthenticationServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

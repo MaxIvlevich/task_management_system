@@ -1,7 +1,6 @@
 package max.iv.task_management_system.mapper;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import max.iv.task_management_system.DTO.UserDTO;
 import max.iv.task_management_system.DTO.UserIncomeDTO;
 import max.iv.task_management_system.Models.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

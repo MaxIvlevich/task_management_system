@@ -1,9 +1,7 @@
 package max.iv.task_management_system.Security;
 
-import max.iv.task_management_system.Models.Enums.Roles;
 import max.iv.task_management_system.Models.User;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -7,8 +7,6 @@ import max.iv.task_management_system.Models.User;
 import max.iv.task_management_system.Repository.UserRepository;
 import max.iv.task_management_system.Services.Interface.UserService;
 import max.iv.task_management_system.mapper.UserDTOMapper;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

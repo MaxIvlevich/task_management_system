@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import max.iv.task_management_system.Models.Enums.Priority;
 import max.iv.task_management_system.Models.Enums.Status;
-import org.springframework.security.config.annotation.web.headers.HeadersSecurityMarker;
 
 import java.util.UUID;
 

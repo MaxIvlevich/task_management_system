@@ -7,7 +7,6 @@ import max.iv.task_management_system.DTO.TaskDTO;
 import max.iv.task_management_system.DTO.TaskResponse;
 import max.iv.task_management_system.Exceptions.TaskAlreadyExistsException;
 import max.iv.task_management_system.Models.Task;
-import max.iv.task_management_system.Models.User;
 import max.iv.task_management_system.Repository.TaskRepository;
 import max.iv.task_management_system.Repository.UserRepository;
 import max.iv.task_management_system.Services.Interface.TaskService;
@@ -15,19 +14,14 @@ import max.iv.task_management_system.mapper.TaskDTOMapper;
 import max.iv.task_management_system.mapper.TaskMapper;
 import max.iv.task_management_system.mapper.UpdateMapper;
 import max.iv.task_management_system.mapper.UserUpdateTaskMapper;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
