@@ -1,12 +1,13 @@
 package max.iv.task_management_system;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import max.iv.task_management_system.Controllers.TaskController;
-import max.iv.task_management_system.DTO.TaskDTO;
-import max.iv.task_management_system.DTO.TaskResponse;
-import max.iv.task_management_system.Repository.TaskRepository;
-import max.iv.task_management_system.Security.Jwt.JwtFilter;
-import max.iv.task_management_system.Services.TaskServiceImpl;
+import max.iv.task_management_system.controllers.TaskController;
+import max.iv.task_management_system.dto.TaskDTO;
+import max.iv.task_management_system.dto.TaskResponse;
+import max.iv.task_management_system.models.Task;
+import max.iv.task_management_system.repository.TaskRepository;
+import max.iv.task_management_system.security.Jwt.JwtFilter;
+import max.iv.task_management_system.services.TaskServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,8 +26,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Collections;
 
-import static max.iv.task_management_system.Models.Enums.Priority.HIGH;
-import static max.iv.task_management_system.Models.Enums.Status.PENDING;
+import static max.iv.task_management_system.models.Enums.Priority.HIGH;
+import static max.iv.task_management_system.models.Enums.Status.PENDING;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -63,6 +64,8 @@ public class ControllerTest {
                     .build();
             pageable = PageRequest.of(0, 20, Sort.by(Sort.Direction.ASC, "taskUUId"));
 
+            Task newTask  = new Task();
+
         }
 
         @Test
@@ -71,7 +74,7 @@ public class ControllerTest {
             Page<TaskDTO> taskPage = new PageImpl<>(Collections.singletonList(taskDTO), pageable, 1);
             TaskResponse taskResponse = new TaskResponse(taskPage);
 
-            //when
+            // when
             when(this.taskService.getAllTasks(pageable)).thenReturn(taskResponse);
             //then
             mvc.perform(MockMvcRequestBuilders.get("/api/tasks")
@@ -81,10 +84,21 @@ public class ControllerTest {
                     .andExpect(content().json(mapper.writeValueAsString(taskResponse)));
         }
         @Test
-        public void teatGetTask()throws Exception{
+        public void testGetTask()throws Exception {
+            //given
+            Task newTask  = new Task();
+            repository.save(newTask);
 
+
+            // when
+
+
+            //then
 
         }
+          //given
+          // when
+          //then
 
     }
 

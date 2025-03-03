@@ -2,9 +2,9 @@ package max.iv.task_management_system.mapper;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
-import max.iv.task_management_system.DTO.IncomeTaskDto;
-import max.iv.task_management_system.Models.Task;
-import max.iv.task_management_system.Repository.UserRepository;
+import max.iv.task_management_system.dto.IncomeTaskDto;
+import max.iv.task_management_system.models.Task;
+import max.iv.task_management_system.repository.UserRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 

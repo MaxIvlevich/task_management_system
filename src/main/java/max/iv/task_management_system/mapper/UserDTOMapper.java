@@ -1,8 +1,8 @@
 package max.iv.task_management_system.mapper;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import max.iv.task_management_system.DTO.UserIncomeDTO;
-import max.iv.task_management_system.Models.User;
+import max.iv.task_management_system.dto.UserIncomeDTO;
+import max.iv.task_management_system.models.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 @Schema(description = "creates a new User  for income User data")
