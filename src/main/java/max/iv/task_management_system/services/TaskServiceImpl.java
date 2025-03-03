@@ -23,6 +23,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * A service for working with Tasks
+ * contains methods for adding deleting retrieving and modifying tasks
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -31,6 +35,12 @@ public class TaskServiceImpl implements TaskService {
     private final TaskMapper taskMapper;
     private final UpdateMapper updateMapper;
     private final UserRepository userRepository;
+
+    /**
+     * The method for getting all paginated  tasks
+     * @param pageable parameter for pagination
+     * @return TaskResponse contains a list of tasks
+     */
     @Override
     @Transactional
     public TaskResponse getAllTasks(Pageable pageable) {
@@ -46,6 +56,14 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
+    /**
+     *a method for updating an issue. Updates the fields depending on the rights ,
+     * if Admin then everything , if User  then only the fields status and comments
+     * @param taskUUID Task id  value UUID
+     * @param incomeTaskDto  DTO of the task to update
+     * @param userEmail email of the user who updates the Task  value String
+     * @return TaskDTO  DTO of the updated task
+     */
     @Override
     @Transactional
     public TaskDTO updateTask(UUID taskUUID,IncomeTaskDto incomeTaskDto,String userEmail)  {
@@ -72,10 +90,12 @@ public class TaskServiceImpl implements TaskService {
             return TaskDTOMapper.taskToDTO(task);
 
         }
-
-
     }
 
+    /**
+     * Deleting an Task by id
+     * @param taskUUID Task id  value UUID
+     */
     @Override
     @Transactional
     public void deleteTask(UUID taskUUID) {
@@ -84,6 +104,12 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.deleteById(taskUUID);
         log.info("Task Deleted");
     }
+
+    /**
+     * Creates a new task for incomeTaskDto
+     * @param incomeTaskDto DTO for incoming task fields
+     * @return TaskDTO DTO of the created task
+     */
     @Override
     @Transactional
     public TaskDTO createNewTask(IncomeTaskDto incomeTaskDto) {
@@ -101,6 +127,11 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
+    /**
+     * Searches for a task in the repository by id
+     * @param uuid Task id  value UUID
+     * @return TaskDTO DTO for found task
+     */
     @Override
     @Transactional
     public TaskDTO findTaskById(UUID uuid) {
@@ -108,13 +139,18 @@ public class TaskServiceImpl implements TaskService {
                 .orElseThrow(()-> new IllegalArgumentException("Task not found"));
         return TaskDTOMapper.taskToDTO(task);
 
-
-
     }
+
+    /**
+     * Receives the task list by  Author email address
+     * @param email email of the user who is the Author of the Task. String value
+     * @param pageable parameter for pagination
+     * @return TaskResponse  contains a list of tasks
+     */
 
     @Override
     @Transactional
-    public TaskResponse getTaskByUserEmail(String email,Pageable pageable) {
+    public TaskResponse getTaskByAuthorEmail(String email,Pageable pageable) {
         log.info("Calling all Tasks by Email {}",email);
 
         List<Task> tasks = taskRepository.findTaskByAuthor(userRepository
@@ -131,6 +167,13 @@ public class TaskServiceImpl implements TaskService {
 
 
     }
+
+    /**
+     * Receives the task list by Executor email address
+     * @param executorEmail email of the user who is the Executor of the Task. String value
+     * @param pageable parameter for pagination
+     * @return TaskResponse contains a list of tasks
+     */
 
     @Override
     public TaskResponse getTaskByExecutorEmail(String executorEmail, Pageable pageable) {
